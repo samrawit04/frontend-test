@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Crypto Tracker</title>
+</head>
+<body>
+    <h1>Cryptocurrency 24h Prices</h1>
+    <div id="prices"></div>
+
+    <script>
+        // Your RapidAPI details go here
+        const apiHost = 'binance43.p.rapidapi.com';
+        const apiKey = 'YOUR_RAPIDAPI_KEY_HERE'; // <<-- REPLACE THIS
+
+        // The symbol(s) you want to check
+        const symbols = ["BTCUSDT", "ETHUSDT"];
+
+        // Function to call the API
+        async function getPrices() {
+            const url = `https://${apiHost}/ticker/24hr?symbols=${JSON.stringify(symbols)}`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Host': apiHost,
+                        'X-RapidAPI-Key': apiKey,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                displayPrices(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('prices').innerHTML = '<p>Could not load prices.</p>';
+            }
+        }
+
+        // Function to display the data on your page
+        function displayPrices(pricesData) {
+            const container = document.getElementById('prices');
+            container.innerHTML = ''; // Clear previous content
+
+            pricesData.forEach(item => {
+                const priceElement = document.createElement('div');
+                priceElement.innerHTML = `
+                    <strong>${item.symbol}</strong>: 
+                    $${parseFloat(item.lastPrice).toFixed(2)} 
+                    <span style="color: ${item.priceChangePercent >= 0 ? 'green' : 'red'};">
+                        (${parseFloat(item.priceChangePercent).toFixed(2)}%)
+                    </span>
+                    <br>
+                `;
+                container.appendChild(priceElement);
+            });
+        }
+
+        // Load prices when the page opens
+        getPrices();
+    </script>
+</body>
+</html>
