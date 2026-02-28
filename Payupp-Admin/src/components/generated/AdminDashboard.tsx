@@ -475,6 +475,12 @@ export default function AdminDashboard({
                 <RefreshCw size={16} className={autoRefresh ? 'animate-spin' : ''} />
                 <span className="hidden sm:inline">Live</span>
               </button>
+              <button
+                onClick={() => window.dispatchEvent(new Event('payupp-admin-logout'))}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-200 rounded-lg hover:bg-red-50 transition-all"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>

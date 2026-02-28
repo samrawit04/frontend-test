@@ -1876,6 +1876,22 @@ export const PayUppMarketplace = () => {
     setPage(newPage);
   };
 
+  // Allow global navigation from the public layout header
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent<{ page?: typeof page }>;
+      const targetPage = customEvent.detail?.page;
+      if (targetPage) {
+        navigateToPage(targetPage);
+      }
+    };
+
+    window.addEventListener('payupp:navigate', handler as EventListener);
+    return () => {
+      window.removeEventListener('payupp:navigate', handler as EventListener);
+    };
+  }, [navigateToPage]);
+
   // Navigate back in history
   const navigateBack = () => {
     if (historyIndex > 0) {
@@ -1940,97 +1956,6 @@ export const PayUppMarketplace = () => {
     navigateToPage('send-money-flow');
   };
   return <div className="min-h-screen bg-white">
-      {/* Navigation Header - Responsive */}
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <button onClick={() => navigateToPage('home')} className="flex items-center gap-2 text-lg sm:text-xl font-bold text-gray-900">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <Send className="text-white" size={18} />
-                </div>
-                <span>Payupp</span>
-              </button>
-              {/* Desktop Navigation */}
-              <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-                <button onClick={() => navigateToPage('browse-offers')} className={`transition-colors ${page === 'browse-offers' ? 'text-blue-600 font-semibold border-b-2 border-blue-600 pb-1' : 'text-gray-600 hover:text-blue-600'}`}>
-                  Browse Offers
-                </button>
-                <button onClick={() => navigateToPage('how-it-works')} className={`transition-colors ${page === 'how-it-works' ? 'text-blue-600 font-semibold border-b-2 border-blue-600 pb-1' : 'text-gray-600 hover:text-blue-600'}`}>
-                  How it Works
-                </button>
-                <button onClick={() => navigateToPage('become-agent')} className={`transition-colors ${page === 'become-agent' ? 'text-blue-600 font-semibold border-b-2 border-blue-600 pb-1' : 'text-gray-600 hover:text-blue-600'}`}>
-                  Become An Agent
-                </button>
-              </nav>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-4">
-              <button onClick={() => navigateToPage('transfers')} className={`px-3 sm:px-4 py-2 text-sm font-medium rounded-lg transition-colors hidden sm:block ${page === 'transfers' ? 'bg-orange-600 text-white hover:bg-orange-700' : 'bg-orange-100 text-orange-700 hover:bg-orange-200'}`}>
-                Transfers
-              </button>
-              <button onClick={() => navigateToPage('help')} className={`text-sm font-medium hidden sm:block transition-colors relative ${page === 'help' ? 'text-blue-600 font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
-                Help
-              </button>
-              <button onClick={() => navigateToPage('profile')} className={`text-sm font-medium hidden sm:block transition-colors relative ${page === 'profile' ? 'text-blue-600 font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
-                Profile
-              </button>
-              {page === 'home' && <>
-                  <button onClick={() => navigateToPage('login')} className="text-sm font-medium text-gray-700 hover:text-blue-600 hidden sm:block">
-                    Log in
-                  </button>
-                  <button onClick={() => navigateToPage('signup')} className="px-3 sm:px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
-                    Sign up
-                  </button>
-                </>}
-              {/* Mobile Menu Toggle */}
-              <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="md:hidden p-2 text-gray-600 hover:text-blue-600">
-                {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-          
-          {/* Mobile Navigation Menu */}
-          {showMobileMenu && <nav className="md:hidden border-t border-gray-200 py-4 space-y-3">
-              <button onClick={() => {
-            navigateToPage('browse-offers');
-            setShowMobileMenu(false);
-          }} className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${page === 'browse-offers' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Browse Offers
-              </button>
-              <button onClick={() => {
-            navigateToPage('how-it-works');
-            setShowMobileMenu(false);
-          }} className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${page === 'how-it-works' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'}`}>
-                How it Works
-              </button>
-              <button onClick={() => {
-            navigateToPage('become-agent');
-            setShowMobileMenu(false);
-          }} className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${page === 'become-agent' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Become An Agent
-              </button>
-              <button onClick={() => {
-            navigateToPage('transfers');
-            setShowMobileMenu(false);
-          }} className="block w-full text-left px-4 py-2 bg-orange-600 text-white hover:bg-orange-700 rounded-lg font-medium">
-                Transfers
-              </button>
-              <button onClick={() => {
-            navigateToPage('help');
-            setShowMobileMenu(false);
-          }} className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${page === 'help' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Help Center
-              </button>
-              <button onClick={() => {
-            navigateToPage('profile');
-            setShowMobileMenu(false);
-          }} className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${page === 'profile' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Profile
-              </button>
-            </nav>}
-        </div>
-      </header>
-
       {/* Announcement Bar */}
       <AnnouncementBar onClick={() => navigateToPage('browse-offers')} />
 

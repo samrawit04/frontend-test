@@ -54,6 +54,9 @@ export default function NavigationMenu({
             <button onClick={() => handleNavigate('profile')} className={`px-4 py-5 text-sm font-medium transition-all border-b-2 hidden sm:block ${currentView === 'profile' ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-700 hover:text-blue-600'}`}>
               Profile
             </button>
+            <button onClick={() => handleNavigate('logout')} className="ml-2 px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
+              Logout
+            </button>
           </div>
         </div>
       </div>
