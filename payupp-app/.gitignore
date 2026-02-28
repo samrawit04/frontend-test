@@ -1,0 +1,10 @@
+.env
+.env.*
+*.env
+config.json
+secrets.json
+node_modules/
+dist/
+build/
+.vscode/
+.idea/
