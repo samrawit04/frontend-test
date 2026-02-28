@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Arial&family=Helvetica&family=Times+New+Roman&family=Georgia&family=Roboto&display=swap');
 @import 'tailwindcss';
 
+/* Ensure Tailwind scans imported SPA components so lg: and other responsive classes are generated */
+@source "../../Main-Page/src/**/*.{js,ts,jsx,tsx}";
+@source "../../Agent-Page/src/**/*.{js,ts,jsx,tsx}";
+@source "../../Dispute-Page/src/**/*.{js,ts,jsx,tsx}";
+@source "../../Payupp-Admin/src/**/*.{js,ts,jsx,tsx}";
+
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
