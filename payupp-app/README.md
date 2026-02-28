@@ -14,9 +14,9 @@ This app merges the existing standalone SPAs (`Main-Page`, `Agent-Page`, `Disput
   - `router.tsx` – React Router v6 configuration
   - `index.css` – Tailwind CSS + PayUpp brand palette (indigo primary, coral accent)
   - `layouts/`
-    - `PublicLayout.tsx` – public header/footer wrapper
+    - `UnifiedPublicLayout.tsx` – public marketplace header/footer wrapper
     - `AgentLayout.tsx` – agent navigation wrapper
-    - `AdminLayout.tsx` – admin sidebar wrapper
+    - `AdminLayout.tsx` – admin wrapper (uses Admin dashboard header)
   - `context/`
     - `AuthContext.tsx` – user, role, `loginWithCredentials`, `logout`
   - `guards/`
@@ -35,10 +35,10 @@ All routing is handled via `src/router.tsx`:
 
 | Path                   | Layout / Guard                             | Component                                                |
 | ---------------------- | ------------------------------------------ | -------------------------------------------------------- |
-| `/`                    | `PublicLayout`                             | `PayUppMarketplace` (from `Main-Page`)                  |
-| `/login`               | `PublicLayout`                             | `LoginPage` (from `Main-Page`)                          |
-| `/signup`              | `PublicLayout`                             | `SignupPage` (from `Main-Page`)                         |
-| `/become-agent`        | `PublicLayout`                             | `BecomeAgentApplication` (from `Main-Page`)             |
+| `/`                    | `UnifiedPublicLayout`                      | `PayUppMarketplace` (from `Main-Page`)                  |
+| `/login`               | `UnifiedPublicLayout`                      | `LoginRoute` wrapper around `LoginPage`                 |
+| `/signup`              | `UnifiedPublicLayout`                      | `SignupPage` (from `Main-Page`)                         |
+| `/become-agent`        | `UnifiedPublicLayout`                      | `BecomeAgentApplication` (from `Main-Page`)             |
 | `/agent`               | `ProtectedRoute(roles=['agent'])` + layout| `AgentProfilePage`                                      |
 | `/agent/profile`       | same as `/agent`                           | `AgentProfilePage` (from `Agent-Page`)                  |
 | `/agent/exchange-rates`| same as `/agent`                           | `ExchangeRateTool` (from `Agent-Page`)                  |
@@ -107,7 +107,7 @@ npm run dev
 
 After `npm run dev`:
 
-1. `/` – PayUpp marketplace in `PublicLayout`
+1. `/` – PayUpp marketplace in `UnifiedPublicLayout`
 2. `/login` – login page using PayUpp brand colors
 3. `/agent` (unauthenticated) – redirected to `/login?redirect=/agent`
 4. `/agent/profile` (agent) – agent profile inside `AgentLayout`

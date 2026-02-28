@@ -7,7 +7,6 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { ErrorPage } from '@/pages/ErrorPage';
 import { LoginRoute } from '@/pages/LoginRoute';
 import { PayUppMarketplace } from '../../Main-Page/src/components/generated/PayUppMarketplace';
-import { LoginPage } from '../../Main-Page/src/components/generated/LoginPage';
 import { SignupPage } from '../../Main-Page/src/components/generated/SignupPage';
 import BecomeAgentApplication from '../../Main-Page/src/components/generated/BecomeAgentApplication';
 import AgentProfilePage from '../../Agent-Page/src/components/generated/AgentProfilePage';
@@ -37,7 +36,7 @@ export const router = createBrowserRouter([
       {
         path: '/become-agent',
         element: <BecomeAgentApplication />
-      }
+      },
     ]
   },
   {
@@ -67,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path: 'transfers',
         element: <TransferRequestsPage />
+      },
+      {
+        path: 'help',
+        element: <DisputeResolutionPage />
       }
     ]
   },
